@@ -1,16 +1,15 @@
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-let darkMode = false;
 
 function addTask() {
     const input = document.getElementById("taskInput");
-    const priority = document.getElementById("priority").value;
+    const type = document.getElementById("type").value;
 
     if (!input.value.trim()) return;
 
     tasks.push({
         text: input.value,
-        done: false,
-        priority: priority
+        type: type,
+        done: false
     });
 
     input.value = "";
@@ -29,24 +28,19 @@ function save() {
 }
 
 function render() {
-    const list = document.getElementById("taskList");
-    const empty = document.getElementById("emptyState");
 
-    list.innerHTML = "";
+    const priorityList = document.getElementById("priorityList");
+    const weeklyList = document.getElementById("weeklyList");
+    const monthlyList = document.getElementById("monthlyList");
 
-    if (tasks.length === 0) {
-        empty.style.display = "block";
-    } else {
-        empty.style.display = "none";
-    }
+    priorityList.innerHTML = "";
+    weeklyList.innerHTML = "";
+    monthlyList.innerHTML = "";
 
     tasks.forEach((task, i) => {
-        const li = document.createElement("li");
-        li.className = "task";
 
-        if (task.priority === "high") {
-            li.classList.add("high");
-        }
+        const li = document.createElement("li");
+        li.className = "item " + task.type;
 
         const left = document.createElement("div");
         left.className = "left";
@@ -68,9 +62,6 @@ function render() {
 
         const del = document.createElement("button");
         del.textContent = "x";
-        del.style.background = "transparent";
-        del.style.color = "gray";
-
         del.onclick = () => {
             tasks.splice(i, 1);
             save();
@@ -80,32 +71,14 @@ function render() {
         li.appendChild(left);
         li.appendChild(del);
 
-        list.appendChild(li);
+        if (task.type === "priority") priorityList.appendChild(li);
+        if (task.type === "weekly") weeklyList.appendChild(li);
+        if (task.type === "monthly") monthlyList.appendChild(li);
     });
-
-    updateProgress();
-}
-
-function updateProgress() {
-    const total = tasks.length;
-    const done = tasks.filter(t => t.done).length;
-
-    const percent = total ? Math.round((done / total) * 100) : 0;
-
-    document.getElementById("progressFill").style.width = percent + "%";
-    document.getElementById("progressText").textContent = percent + "%";
 }
 
 function toggleDarkMode() {
-    darkMode = !darkMode;
     document.body.classList.toggle("dark");
-    localStorage.setItem("dark", darkMode);
 }
 
-function loadDarkMode() {
-    darkMode = localStorage.getItem("dark") === "true";
-    if (darkMode) document.body.classList.add("dark");
-}
-
-loadDarkMode();
 render();
