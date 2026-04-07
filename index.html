@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Planner</title>
+    <title>Weekly Planner</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -13,13 +13,8 @@
     <!-- TOP -->
     <div class="top-bar">
         <div class="week-bar">
-            <div>Mon</div>
-            <div>Tue</div>
-            <div>Wed</div>
-            <div>Thu</div>
-            <div>Fri</div>
-            <div>Sat</div>
-            <div>Sun</div>
+            <div>Mon</div><div>Tue</div><div>Wed</div>
+            <div>Thu</div><div>Fri</div><div>Sat</div><div>Sun</div>
         </div>
 
         <button onclick="toggleDarkMode()" class="mode-btn">🌓</button>
@@ -27,7 +22,8 @@
 
     <!-- INPUT -->
     <div class="input-box">
-        <input id="taskInput" placeholder="Add item">
+        <input id="taskInput" placeholder="Add task">
+
         <select id="type">
             <option value="priority">Priority</option>
             <option value="weekly">Weekly Goal</option>
@@ -37,17 +33,17 @@
         <button onclick="addTask()">+</button>
     </div>
 
-    <!-- PRIORITY -->
-    <h3>Priority</h3>
+    <!-- CURRENT WEEK -->
+    <h3>Current Week</h3>
+    <div id="currentWeekLabel"></div>
+
     <ul id="priorityList"></ul>
-
-    <!-- WEEKLY -->
-    <h3>Weekly Goals</h3>
     <ul id="weeklyList"></ul>
-
-    <!-- MONTHLY -->
-    <h3>Monthly Goals</h3>
     <ul id="monthlyList"></ul>
+
+    <!-- ARCHIVE -->
+    <h3>Past Weeks</h3>
+    <div id="archive"></div>
 
 </div>
 
