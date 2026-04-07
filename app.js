@@ -1,4 +1,5 @@
-let db = JSON.parse(localStorage.getItem("db")) || {};
+
+let selectedDay = 0;let db = JSON.parse(localStorage.getItem("db")) || {};
 let dark = localStorage.getItem("dark") === "true";
 
 const currentWeek = getWeekKey();
