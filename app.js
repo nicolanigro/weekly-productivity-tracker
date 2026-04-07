@@ -182,3 +182,26 @@ function updateProgress() {
     document.getElementById("progressText").innerText = percent + "% completed";
     document.getElementById("progressFill").style.width = percent + "%";
 }
+
+// =========================
+// STEP 3 - PROGRESS LOGIC
+// =========================
+function updateProgress() {
+
+    const tasks = db[currentWeek]?.[selectedDay] || [];
+
+    const textEl = document.getElementById("progressText");
+    const fillEl = document.getElementById("progressFill");
+
+    if (tasks.length === 0) {
+        textEl.innerText = "0% completed";
+        fillEl.style.width = "0%";
+        return;
+    }
+
+    const completed = tasks.filter(t => t.done).length;
+    const percent = Math.round((completed / tasks.length) * 100);
+
+    textEl.innerText = percent + "% completed";
+    fillEl.style.width = percent + "%";
+}
