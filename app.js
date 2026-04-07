@@ -23,6 +23,10 @@ function initWeek() {
         save();
     }
 }
+function setDay(day) {
+    selectedDay = day;
+    render();
+}
 
 function addTask() {
     const input = document.getElementById("taskInput");
