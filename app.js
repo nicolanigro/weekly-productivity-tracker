@@ -27,6 +27,25 @@ function addTask() {
 
     if (!input.value.trim()) return;
 
+    if (!db[currentWeek]) {
+        db[currentWeek] = [];
+    }
+
+    db[currentWeek].push({
+        text: input.value,
+        type: type,
+        done: false
+    });
+
+    input.value = "";
+    save();
+    render();
+} {
+    const input = document.getElementById("taskInput");
+    const type = document.getElementById("type").value;
+
+    if (!input.value.trim()) return;
+
     db[currentWeek].push({
         text: input.value,
         type: type,
