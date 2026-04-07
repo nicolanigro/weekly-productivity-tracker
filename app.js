@@ -14,7 +14,10 @@ function getWeekKey() {
 
     return `${year}-W${week}`;
 }
-
+function setDay(day) {
+    selectedDay = day;
+    render();
+}
 function initWeek() {
     if (!db[currentWeek]) {
         db[currentWeek] = [];
