@@ -2,32 +2,45 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Weekly Productivity Tracker</title>
+    <title>Weekly Tracker</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
 <div class="container">
 
-    <!-- WEEK HEADER -->
-    <div class="week-bar">
-        <div>Mon</div>
-        <div>Tue</div>
-        <div>Wed</div>
-        <div>Thu</div>
-        <div>Fri</div>
-        <div>Sat</div>
-        <div>Sun</div>
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <div class="week-bar">
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+            <div>Sun</div>
+        </div>
+
+        <button onclick="toggleDarkMode()" class="mode-btn">🌓</button>
     </div>
 
     <!-- INPUT -->
     <div class="input-box">
-        <input type="text" id="taskInput" placeholder="Add task">
+        <input id="taskInput" type="text" placeholder="Add a task">
+        
+        <select id="priority">
+            <option value="normal">Normal</option>
+            <option value="high">High</option>
+        </select>
+
         <button onclick="addTask()">+</button>
     </div>
 
     <!-- TASK LIST -->
     <ul id="taskList"></ul>
+
+    <div id="emptyState">No tasks yet</div>
 
     <!-- PROGRESS -->
     <div class="progress-container">
