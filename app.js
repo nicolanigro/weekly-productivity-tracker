@@ -43,7 +43,11 @@ function addTask() {
     if (!input.value.trim()) return;
 
     if (!db[currentWeek]) {
-        db[currentWeek] = [];
+       db[currentWeek][selectedDay].push({
+    text: input.value,
+    type: type,
+    done: false
+});
     }
 
     db[currentWeek].push({
