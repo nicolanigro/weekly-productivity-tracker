@@ -132,6 +132,10 @@ function toggleDarkMode() {
     save();
 }
 
-initWeek();
-if (dark) document.body.classList.add("dark");
-render();
+document.addEventListener("DOMContentLoaded", () => {
+    initWeek();
+
+    if (dark) document.body.classList.add("dark");
+
+    render();
+});
