@@ -50,6 +50,8 @@ function initWeek() {
 function setDay(day) {
     selectedDay = day;
     render();
+    updateProgress(); // IMPORTANT FIX
+}
 }
 
 // =========================
