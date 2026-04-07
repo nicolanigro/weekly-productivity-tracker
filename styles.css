@@ -9,31 +9,54 @@ body.dark {
     color: white;
 }
 
+/* MAIN CONTAINER */
 .container {
-    width: 92%;
+    width: 94%;
     max-width: 520px;
-    margin: 25px auto;
+    margin: 20px auto;
+    padding: 0 8px;
 }
 
+/* TOP BAR */
 .top-bar {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
+/* WEEK DAYS */
 .week-bar {
     display: flex;
     justify-content: space-between;
+    flex: 1;
     font-size: 12px;
     color: gray;
-    flex: 1;
+    cursor: pointer;
 }
 
+.week-bar div {
+    padding: 6px;
+    border-radius: 8px;
+}
+
+.week-bar div:hover {
+    background: #e5e5ea;
+}
+
+body.dark .week-bar div:hover {
+    background: #2a2a2a;
+}
+
+/* DARK MODE BUTTON */
 .mode-btn {
     border: none;
     background: none;
     font-size: 18px;
+    margin-left: 10px;
 }
 
+/* INPUT */
 .input-box {
     display: flex;
     gap: 8px;
@@ -55,17 +78,20 @@ button {
     padding: 10px;
 }
 
+/* HEADINGS */
 h3 {
     margin-top: 20px;
     font-size: 13px;
     color: gray;
 }
 
+/* LISTS */
 ul {
     list-style: none;
     padding: 0;
 }
 
+/* TASK ITEM */
 .item {
     background: white;
     padding: 12px;
@@ -79,24 +105,33 @@ body.dark .item {
     background: #1e1e1e;
 }
 
+/* LEFT SIDE */
 .left {
     display: flex;
     gap: 10px;
+    align-items: center;
 }
 
+/* CHECK CIRCLE */
 .circle {
     width: 18px;
     height: 18px;
     border-radius: 50%;
     border: 2px solid #007aff;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
 }
 
+/* DONE TASK */
 .done {
     text-decoration: line-through;
     opacity: 0.5;
 }
 
+/* TYPES */
 .priority { border-left: 4px solid #ff3b30; }
 .weekly { border-left: 4px solid #007aff; }
 .monthly { border-left: 4px solid #34c759; }
