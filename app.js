@@ -97,7 +97,7 @@ function render() {
     weeklyList.innerHTML = "";
     monthlyList.innerHTML = "";
 
-    const tasks = db[currentWeek] || [];
+   const tasks = db[currentWeek]?.[selectedDay] || [];
 
     tasks.forEach((task, i) => {
 
