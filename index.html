@@ -10,24 +10,26 @@
 
 <div class="container">
 
-    <!-- TOP -->
+    <!-- TOP WEEK BAR -->
     <div class="top-bar">
-      <div class="week-bar">
-    <div onclick="setDay(0)">Mon</div>
-    <div onclick="setDay(1)">Tue</div>
-    <div onclick="setDay(2)">Wed</div>
-    <div onclick="setDay(3)">Thu</div>
-    <div onclick="setDay(4)">Fri</div>
-    <div onclick="setDay(5)">Sat</div>
-    <div onclick="setDay(6)">Sun</div>
-</div>
+
+        <div class="week-bar">
+            <div onclick="setDay(0)">Mon</div>
+            <div onclick="setDay(1)">Tue</div>
+            <div onclick="setDay(2)">Wed</div>
+            <div onclick="setDay(3)">Thu</div>
+            <div onclick="setDay(4)">Fri</div>
+            <div onclick="setDay(5)">Sat</div>
+            <div onclick="setDay(6)">Sun</div>
         </div>
 
         <button onclick="toggleDarkMode()" class="mode-btn">🌓</button>
+
     </div>
 
     <!-- INPUT -->
     <div class="input-box">
+
         <input id="taskInput" placeholder="Add task">
 
         <select id="type">
@@ -37,11 +39,11 @@
         </select>
 
         <button onclick="addTask()">+</button>
+
     </div>
 
     <!-- CURRENT WEEK -->
-    <h3>Current Week</h3>
-    <div id="currentWeekLabel"></div>
+    <h3>Tasks</h3>
 
     <ul id="priorityList"></ul>
     <ul id="weeklyList"></ul>
