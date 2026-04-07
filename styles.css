@@ -185,3 +185,36 @@ body.dark .archive-box {
 body.dark .progress-bar {
     background: #2a2a2a;
 }
+/* =========================
+   STEP 2 - PROGRESS BAR
+========================= */
+
+.progress-container {
+    margin-top: 20px;
+}
+
+.progress-text {
+    font-size: 12px;
+    color: gray;
+    margin-bottom: 6px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    background: #e5e5ea;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: #007aff;
+    border-radius: 20px;
+    transition: width 0.25s ease;
+}
+
+body.dark .progress-bar {
+    background: #2a2a2a;
+}
