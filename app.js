@@ -1,6 +1,6 @@
-
-let selectedDay = 0;let db = JSON.parse(localStorage.getItem("db")) || {};
+let db = JSON.parse(localStorage.getItem("db")) || {};
 let dark = localStorage.getItem("dark") === "true";
+
 let selectedDay = 0;
 
 const currentWeek = getWeekKey();
@@ -16,21 +16,29 @@ function getWeekKey() {
     return `${year}-W${week}`;
 }
 
-}
 function initWeek() {
     if (!db[currentWeek]) {
-       db[currentWeek] = {
-    0: [],
-    1: [],
-    2: [],
-    3: [],
-    4: [],
-    5: [],
-    6: []
-};
-        save();
+        db[currentWeek] = {
+            0: [],
+            1: [],
+            2: [],
+            3: [],
+            4: [],
+            5: [],
+            6: []
+        };
     }
+
+    // safety fix if structure is broken
+    for (let i = 0; i < 7; i++) {
+        if (!db[currentWeek][i]) {
+            db[currentWeek][i] = [];
+        }
+    }
+
+    save();
 }
+
 function setDay(day) {
     selectedDay = day;
     render();
@@ -42,30 +50,9 @@ function addTask() {
 
     if (!input.value.trim()) return;
 
-    if (!db[currentWeek]) {
-       db[currentWeek][selectedDay].push({
-    text: input.value,
-    type: type,
-    done: false
-});
-    }
+    initWeek();
 
-    db[currentWeek].push({
-        text: input.value,
-        type: type,
-        done: false
-    });
-
-    input.value = "";
-    save();
-    render();
-} {
-    const input = document.getElementById("taskInput");
-    const type = document.getElementById("type").value;
-
-    if (!input.value.trim()) return;
-
-    db[currentWeek].push({
+    db[currentWeek][selectedDay].push({
         text: input.value,
         type: type,
         done: false
@@ -77,7 +64,9 @@ function addTask() {
 }
 
 function toggleTask(index) {
-    db[currentWeek][index].done = !db[currentWeek][index].done;
+    db[currentWeek][selectedDay][index].done =
+        !db[currentWeek][selectedDay][index].done;
+
     save();
     render();
 }
@@ -88,7 +77,6 @@ function save() {
 }
 
 function render() {
-
     const priorityList = document.getElementById("priorityList");
     const weeklyList = document.getElementById("weeklyList");
     const monthlyList = document.getElementById("monthlyList");
@@ -97,7 +85,7 @@ function render() {
     weeklyList.innerHTML = "";
     monthlyList.innerHTML = "";
 
-   const tasks = db[currentWeek]?.[selectedDay] || [];
+    const tasks = db[currentWeek]?.[selectedDay] || [];
 
     tasks.forEach((task, i) => {
 
