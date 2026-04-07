@@ -5,9 +5,7 @@ let selectedDay = 0;
 
 const currentWeek = getWeekKey();
 
-// =========================
 // WEEK KEY
-// =========================
 function getWeekKey() {
     const now = new Date();
     const year = now.getFullYear();
@@ -19,44 +17,23 @@ function getWeekKey() {
     return `${year}-W${week}`;
 }
 
-// =========================
-// INIT WEEK STRUCTURE
-// =========================
+// INIT WEEK
 function initWeek() {
     if (!db[currentWeek]) {
         db[currentWeek] = {
-            0: [],
-            1: [],
-            2: [],
-            3: [],
-            4: [],
-            5: [],
-            6: []
+            0: [], 1: [], 2: [], 3: [],
+            4: [], 5: [], 6: []
         };
     }
-
-    for (let i = 0; i < 7; i++) {
-        if (!db[currentWeek][i]) {
-            db[currentWeek][i] = [];
-        }
-    }
-
-    save();
 }
 
-// =========================
-// CHANGE DAY
-// =========================
+// SET DAY
 function setDay(day) {
     selectedDay = day;
     render();
-    updateProgress(); // IMPORTANT FIX
-}
 }
 
-// =========================
 // ADD TASK
-// =========================
 function addTask() {
     const input = document.getElementById("taskInput");
     const type = document.getElementById("type").value;
@@ -64,8 +41,7 @@ function addTask() {
     if (!input.value.trim()) return;
 
     initWeek();
-initWeek();
-updateProgress();
+
     db[currentWeek][selectedDay].push({
         text: input.value,
         type: type,
@@ -75,32 +51,24 @@ updateProgress();
     input.value = "";
     save();
     render();
-    updateProgress();
 }
 
-// =========================
-// TOGGLE TASK COMPLETE
-// =========================
+// TOGGLE TASK
 function toggleTask(index) {
     db[currentWeek][selectedDay][index].done =
         !db[currentWeek][selectedDay][index].done;
 
     save();
     render();
-    updateProgress();
 }
 
-// =========================
-// SAVE DATA
-// =========================
+// SAVE
 function save() {
     localStorage.setItem("db", JSON.stringify(db));
     localStorage.setItem("dark", dark);
 }
 
-// =========================
-// RENDER TASKS
-// =========================
+// RENDER
 function render() {
     const priorityList = document.getElementById("priorityList");
     const weeklyList = document.getElementById("weeklyList");
@@ -122,19 +90,16 @@ function render() {
 
         const circle = document.createElement("div");
         circle.className = "circle";
-
         if (task.done) circle.innerHTML = "✓";
 
         circle.onclick = () => toggleTask(i);
 
         const text = document.createElement("div");
         text.textContent = task.text;
-
         if (task.done) text.classList.add("done");
 
         left.appendChild(circle);
         left.appendChild(text);
-
         li.appendChild(left);
 
         if (task.type === "priority") priorityList.appendChild(li);
@@ -146,15 +111,13 @@ function render() {
     updateProgress();
 }
 
-// =========================
 // ARCHIVE
-// =========================
 function renderArchive() {
     const archive = document.getElementById("archive");
     archive.innerHTML = "";
 
     Object.keys(db)
-        .filter(key => key !== currentWeek)
+        .filter(k => k !== currentWeek)
         .sort((a, b) => b.localeCompare(a))
         .forEach(week => {
 
@@ -181,43 +144,35 @@ function renderArchive() {
         });
 }
 
-// =========================
 // DARK MODE
-// =========================
 function toggleDarkMode() {
     dark = !dark;
     document.body.classList.toggle("dark");
     save();
 }
 
-// =========================
-// PROGRESS BAR
-// =========================
+// PROGRESS
 function updateProgress() {
 
     const tasks = db[currentWeek]?.[selectedDay] || [];
 
-    const textEl = document.getElementById("progressText");
-    const fillEl = document.getElementById("progressFill");
+    const text = document.getElementById("progressText");
+    const fill = document.getElementById("progressFill");
 
-    if (!textEl || !fillEl) return;
-
-    if (tasks.length === 0) {
-        textEl.innerText = "0% completed";
-        fillEl.style.width = "0%";
+    if (!tasks.length) {
+        text.innerText = "0% completed";
+        fill.style.width = "0%";
         return;
     }
 
-    const completed = tasks.filter(t => t.done).length;
-    const percent = Math.round((completed / tasks.length) * 100);
+    const done = tasks.filter(t => t.done).length;
+    const percent = Math.round((done / tasks.length) * 100);
 
-    textEl.innerText = percent + "% completed";
-    fillEl.style.width = percent + "%";
+    text.innerText = percent + "% completed";
+    fill.style.width = percent + "%";
 }
 
-// =========================
-// START APP
-// =========================
+// START
 document.addEventListener("DOMContentLoaded", () => {
     initWeek();
 
