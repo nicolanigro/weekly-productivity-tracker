@@ -5,6 +5,9 @@ let selectedDay = 0;
 
 const currentWeek = getWeekKey();
 
+// =========================
+// WEEK KEY
+// =========================
 function getWeekKey() {
     const now = new Date();
     const year = now.getFullYear();
@@ -16,6 +19,9 @@ function getWeekKey() {
     return `${year}-W${week}`;
 }
 
+// =========================
+// INIT WEEK STRUCTURE
+// =========================
 function initWeek() {
     if (!db[currentWeek]) {
         db[currentWeek] = {
@@ -29,7 +35,6 @@ function initWeek() {
         };
     }
 
-    // safety fix if structure is broken
     for (let i = 0; i < 7; i++) {
         if (!db[currentWeek][i]) {
             db[currentWeek][i] = [];
@@ -39,11 +44,17 @@ function initWeek() {
     save();
 }
 
+// =========================
+// CHANGE DAY
+// =========================
 function setDay(day) {
     selectedDay = day;
     render();
 }
 
+// =========================
+// ADD TASK
+// =========================
 function addTask() {
     const input = document.getElementById("taskInput");
     const type = document.getElementById("type").value;
@@ -61,23 +72,33 @@ function addTask() {
     input.value = "";
     save();
     render();
+    updateProgress();
 }
 
+// =========================
+// TOGGLE TASK COMPLETE
+// =========================
 function toggleTask(index) {
     db[currentWeek][selectedDay][index].done =
         !db[currentWeek][selectedDay][index].done;
 
     save();
     render();
+    updateProgress();
 }
 
+// =========================
+// SAVE DATA
+// =========================
 function save() {
     localStorage.setItem("db", JSON.stringify(db));
     localStorage.setItem("dark", dark);
 }
 
-renderArchive();
-updateProgress(); // STEP 3B {
+// =========================
+// RENDER TASKS
+// =========================
+function render() {
     const priorityList = document.getElementById("priorityList");
     const weeklyList = document.getElementById("weeklyList");
     const monthlyList = document.getElementById("monthlyList");
@@ -119,8 +140,12 @@ updateProgress(); // STEP 3B {
     });
 
     renderArchive();
+    updateProgress();
 }
 
+// =========================
+// ARCHIVE
+// =========================
 function renderArchive() {
     const archive = document.getElementById("archive");
     archive.innerHTML = "";
@@ -153,39 +178,17 @@ function renderArchive() {
         });
 }
 
+// =========================
+// DARK MODE
+// =========================
 function toggleDarkMode() {
     dark = !dark;
     document.body.classList.toggle("dark");
     save();
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    initWeek();
-
-    if (dark) document.body.classList.add("dark");
-
-    render();
-});
-
-function updateProgress() {
-
-    let allTasks = db[currentWeek]?.[selectedDay] || [];
-
-    if (allTasks.length === 0) {
-        document.getElementById("progressText").innerText = "0% completed";
-        document.getElementById("progressFill").style.width = "0%";
-        return;
-    }
-
-    let completed = allTasks.filter(t => t.done).length;
-    let percent = Math.round((completed / allTasks.length) * 100);
-
-    document.getElementById("progressText").innerText = percent + "% completed";
-    document.getElementById("progressFill").style.width = percent + "%";
-}
-
 // =========================
-// STEP 3 - PROGRESS LOGIC
+// PROGRESS BAR
 // =========================
 function updateProgress() {
 
@@ -193,6 +196,8 @@ function updateProgress() {
 
     const textEl = document.getElementById("progressText");
     const fillEl = document.getElementById("progressFill");
+
+    if (!textEl || !fillEl) return;
 
     if (tasks.length === 0) {
         textEl.innerText = "0% completed";
@@ -206,3 +211,14 @@ function updateProgress() {
     textEl.innerText = percent + "% completed";
     fillEl.style.width = percent + "%";
 }
+
+// =========================
+// START APP
+// =========================
+document.addEventListener("DOMContentLoaded", () => {
+    initWeek();
+
+    if (dark) document.body.classList.add("dark");
+
+    render();
+});
