@@ -1,46 +1,63 @@
-function addTask(type) {
-    let input, list;
+let tasks = [];
 
-    if (type === "weekly") {
-        input = document.getElementById("weeklyInput");
-        list = document.getElementById("weeklyList");
-    } else {
-        input = document.getElementById("monthlyGoalInput");
-        list = document.getElementById("monthlyGoalList");
-    }
+function addTask() {
+    const input = document.getElementById("taskInput");
 
-    const text = input.value;
-    if (text === "") return;
+    if (input.value.trim() === "") return;
 
-    const li = document.createElement("li");
+    tasks.push({
+        text: input.value,
+        done: false
+    });
 
-    const btn = document.createElement("span");
-    btn.textContent = "⭕ ";
-    btn.onclick = function () {
-        li.classList.toggle("completed");
-        btn.textContent = li.classList.contains("completed") ? "✅ " : "⭕ ";
-        updateProgress();
-    };
-
-    li.appendChild(btn);
-    li.appendChild(document.createTextNode(text));
-
-    list.appendChild(li);
     input.value = "";
+    renderTasks();
+}
+
+function toggleTask(index) {
+    tasks[index].done = !tasks[index].done;
+    renderTasks();
+}
+
+function renderTasks() {
+    const list = document.getElementById("taskList");
+    list.innerHTML = "";
+
+    tasks.forEach((task, index) => {
+        const li = document.createElement("li");
+        li.className = "task";
+
+        const circle = document.createElement("div");
+        circle.className = "circle";
+
+        if (task.done) {
+            circle.innerHTML = "✓";
+        }
+
+        circle.onclick = () => toggleTask(index);
+
+        const text = document.createElement("div");
+        text.textContent = task.text;
+
+        if (task.done) {
+            text.classList.add("done");
+        }
+
+        li.appendChild(circle);
+        li.appendChild(text);
+
+        list.appendChild(li);
+    });
 
     updateProgress();
 }
 
 function updateProgress() {
-    const weekly = document.querySelectorAll("#weeklyList li");
-    const weeklyDone = document.querySelectorAll("#weeklyList .completed");
+    const total = tasks.length;
+    const done = tasks.filter(t => t.done).length;
 
-    const monthly = document.querySelectorAll("#monthlyGoalList li");
-    const monthlyDone = document.querySelectorAll("#monthlyGoalList .completed");
+    const percent = total === 0 ? 0 : Math.round((done / total) * 100);
 
-    const weeklyPercent = weekly.length ? Math.round((weeklyDone.length / weekly.length) * 100) : 0;
-    const monthlyPercent = monthly.length ? Math.round((monthlyDone.length / monthly.length) * 100) : 0;
-
-    document.getElementById("weeklyProgress").textContent = weeklyPercent + "%";
-    document.getElementById("monthlyProgress").textContent = monthlyPercent + "%";
+    document.getElementById("progressFill").style.width = percent + "%";
+    document.getElementById("progressText").textContent = percent + "%";
 }
