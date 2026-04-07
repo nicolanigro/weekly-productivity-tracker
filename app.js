@@ -64,7 +64,8 @@ function addTask() {
     if (!input.value.trim()) return;
 
     initWeek();
-
+initWeek();
+updateProgress();
     db[currentWeek][selectedDay].push({
         text: input.value,
         type: type,
