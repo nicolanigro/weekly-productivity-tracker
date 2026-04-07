@@ -76,7 +76,8 @@ function save() {
     localStorage.setItem("dark", dark);
 }
 
-function render() {
+renderArchive();
+updateProgress(); // STEP 3B {
     const priorityList = document.getElementById("priorityList");
     const weeklyList = document.getElementById("weeklyList");
     const monthlyList = document.getElementById("monthlyList");
