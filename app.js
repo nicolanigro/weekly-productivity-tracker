@@ -165,3 +165,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     render();
 });
+
+function updateProgress() {
+
+    let allTasks = db[currentWeek]?.[selectedDay] || [];
+
+    if (allTasks.length === 0) {
+        document.getElementById("progressText").innerText = "0% completed";
+        document.getElementById("progressFill").style.width = "0%";
+        return;
+    }
+
+    let completed = allTasks.filter(t => t.done).length;
+    let percent = Math.round((completed / allTasks.length) * 100);
+
+    document.getElementById("progressText").innerText = percent + "% completed";
+    document.getElementById("progressFill").style.width = percent + "%";
+}
