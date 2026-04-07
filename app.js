@@ -19,7 +19,15 @@ function getWeekKey() {
 }
 function initWeek() {
     if (!db[currentWeek]) {
-        db[currentWeek] = [];
+       db[currentWeek] = {
+    0: [],
+    1: [],
+    2: [],
+    3: [],
+    4: [],
+    5: [],
+    6: []
+};
         save();
     }
 }
