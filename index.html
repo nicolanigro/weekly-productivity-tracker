@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Weekly Productivity Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Weekly Productivity Tracker ✅</h1>
+
+        <div class="section">
+            <h2>Weekly Tasks</h2>
+            <input type="text" id="weeklyInput">
+            <button onclick="addTask('weekly')">Add</button>
+            <ul id="weeklyList"></ul>
+        </div>
+
+        <div class="section">
+            <h2>Monthly Goals</h2>
+            <input type="text" id="monthlyGoalInput">
+            <button onclick="addTask('monthlyGoal')">Add</button>
+            <ul id="monthlyGoalList"></ul>
+        </div>
+
+        <div class="progress">
+            <p>Weekly: <span id="weeklyProgress">0%</span></p>
+            <p>Monthly: <span id="monthlyProgress">0%</span></p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
